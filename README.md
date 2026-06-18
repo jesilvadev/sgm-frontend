@@ -2,20 +2,21 @@
 
 Interface web do Sistema de Gerenciamento de Mercearia, desenvolvida em React + Tailwind CSS.
 
+## Acesso em produção
+
+| Serviço | Link |
+|---------|------|
+| Frontend | https://sgm-gestao.web.app |
+
 ## Requisitos
 
 - Node.js 18+
-- Backend SGM rodando na porta 5001
+- Backend SGM rodando na porta 5001 (para desenvolvimento local)
 
-## Instalação
+## Como rodar localmente
 
 ```bash
 npm install
-```
-
-## Como rodar
-
-```bash
 npm run dev
 ```
 
@@ -39,10 +40,11 @@ Acesse **http://localhost:5173** no navegador.
 | Extrato | Consulta de extrato por cliente |
 | Usuários | Gerenciamento de usuários (apenas Admin) |
 
-## Tecnologias
+## Tecnologias e serviços
 
-- [React](https://react.dev/)
-- [Vite](https://vite.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [React Router](https://reactrouter.com/)
-- [Axios](https://axios-http.com/)
+- [React](https://react.dev/) — biblioteca de interface
+- [Vite](https://vite.dev/) — bundler e servidor de desenvolvimento
+- [Tailwind CSS](https://tailwindcss.com/) — estilização
+- [React Router](https://reactrouter.com/) — navegação entre páginas
+- [Axios](https://axios-http.com/) — requisições HTTP para a API
+- [Firebase Hosting](https://firebase.google.com/products/hosting) — hospedagem do frontend
