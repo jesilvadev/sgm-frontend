@@ -7,6 +7,7 @@ import Usuarios from './pages/Usuarios'
 import Extrato from './pages/Extrato'
 import Layout from './components/Layout'
 import PrivateRoute from './components/PrivateRoute'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
@@ -21,7 +22,7 @@ export default function App() {
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/extrato" element={<Extrato />} />
         </Route>
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
