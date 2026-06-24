@@ -1,3 +1,4 @@
+import Spinner from '../components/Spinner'
 import { useEffect, useState } from 'react'
 import api from '../api'
 
@@ -20,7 +21,7 @@ export default function Dashboard() {
       .finally(() => setLoading(false))
   }, [])
 
-  if (loading) return <p className="text-gray-500">Carregando...</p>
+  if (loading) return <Spinner />
   if (!data) return <p className="text-red-500">Erro ao carregar dashboard.</p>
 
   const fmt = v => `R$ ${Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
