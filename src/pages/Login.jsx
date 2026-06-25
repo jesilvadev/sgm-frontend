@@ -57,10 +57,21 @@ export default function Login() {
   const [systemStatus, setSystemStatus] = useState('loading')
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/health`)
-      .then(res => res.ok ? res.json() : Promise.reject())
-      .then(data => setSystemStatus(data.status === 'operational' ? 'operational' : 'outage'))
-      .catch(() => setSystemStatus('outage'))
+    let attempts = 0
+    const check = () => {
+      fetch(`${import.meta.env.VITE_API_URL}/health`)
+        .then(res => res.ok ? res.json() : Promise.reject())
+        .then(data => setSystemStatus(data.status === 'operational' ? 'operational' : 'outage'))
+        .catch(() => {
+          attempts++
+          if (attempts < 4) {
+            setTimeout(check, 5000)
+          } else {
+            setSystemStatus('outage')
+          }
+        })
+    }
+    check()
   }, [])
 
   async function handleSubmit(e) {
