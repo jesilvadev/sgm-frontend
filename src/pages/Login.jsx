@@ -1,5 +1,5 @@
 import logoSgm from '../assets/logosgm.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
@@ -54,6 +54,14 @@ export default function Login() {
   const [erro, setErro] = useState('')
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [systemStatus, setSystemStatus] = useState('loading')
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/health`)
+      .then(res => res.ok ? res.json() : Promise.reject())
+      .then(data => setSystemStatus(data.status === 'operational' ? 'operational' : 'outage'))
+      .catch(() => setSystemStatus('outage'))
+  }, [])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -77,8 +85,24 @@ export default function Login() {
         <div className="relative z-10 flex flex-col justify-between h-full px-12 py-10">
           {/* Status badge */}
           <div className="inline-flex items-center gap-2 bg-white/[0.04] rounded-full px-4 py-1.5 w-fit">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)] animate-pulse flex-shrink-0" />
-            <span className="text-xs text-white/40 whitespace-nowrap">Todos os sistemas operacionais</span>
+            {systemStatus === 'loading' && (
+              <>
+                <span className="w-2 h-2 rounded-full bg-yellow-400 shadow-[0_0_6px_rgba(250,204,21,0.8)] animate-pulse flex-shrink-0" />
+                <span className="text-xs text-white/40 whitespace-nowrap">Verificando sistemas…</span>
+              </>
+            )}
+            {systemStatus === 'operational' && (
+              <>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)] animate-pulse flex-shrink-0" />
+                <span className="text-xs text-white/40 whitespace-nowrap">Todos os sistemas operacionais</span>
+              </>
+            )}
+            {systemStatus === 'outage' && (
+              <>
+                <span className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.8)] flex-shrink-0" />
+                <span className="text-xs text-white/40 whitespace-nowrap">Instabilidade no sistema</span>
+              </>
+            )}
           </div>
 
           {/* Logo */}
